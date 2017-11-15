@@ -44,7 +44,7 @@ These figures don't exactly match my predictions, but they aren't too far off. L
 
 ###### 7. Now let’s study `vector-try-wait.c`. First make sure you understand the code. Is the first call to `pthread_mutex_trylock()` really needed? Now run the code. How fast does it run compared to the global order approach? How does the number of retries, as counted by the code, change as the number of threads increases?
 
-The first call is really needed, how else are you going to lock the destination vector?
+No, we don’t need the first trylock, and using is a really wrong way of implementing trylock because the threads will never sleep and will waste the CPU time in waiting only we should use just `pthread_mutex_lock()`.
 
 Below are run times with the options `-t -l 100000 -d`, varying the number of threads (`-n`):
 
